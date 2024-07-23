@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5y20dv7bfrda"]
+
+[ext_resource type="Script" path="res://entities/composition/mapArea/mapAreaComposition.gd" id="1_nkr2u"]
+
+[node name="mapAreaComposition" type="Area2D"]
+script = ExtResource("1_nkr2u")

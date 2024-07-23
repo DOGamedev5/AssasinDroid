@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://dkfrmfbweteps"]
+
+[ext_resource type="PackedScene" uid="uid://e2w0gv26nebo" path="res://maps/area1/rooms/room1.tscn" id="3_hqwyx"]
+[ext_resource type="PackedScene" uid="uid://baf1yuwh274nr" path="res://entities/player/player.tscn" id="4_eybw8"]
+[ext_resource type="PackedScene" uid="uid://bt77weuxjgs4a" path="res://maps/area1/rooms/room2.tscn" id="4_odukl"]
+[ext_resource type="PackedScene" uid="uid://bimonkpbifkbe" path="res://maps/area1/rooms/room3.tscn" id="5_382sa"]
+[ext_resource type="Script" path="res://entities/composition/damage/damageComponent.gd" id="5_y2i50"]
+[ext_resource type="PackedScene" uid="uid://bw8dtnajg68e7" path="res://maps/area1/rooms/room4.tscn" id="6_68625"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsoyj"]
+
+[node name="area1Map" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("4_eybw8")]
+unique_name_in_owner = true
+position = Vector2(0, 208)
+
+[node name="DamageComponent" type="Area2D" parent="."]
+position = Vector2(223, 47)
+script = ExtResource("5_y2i50")
+damage = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
+shape = SubResource("RectangleShape2D_gsoyj")
+debug_color = Color(0.792157, 0.427451, 0, 0.419608)
+
+[node name="map" type="Node2D" parent="."]
+
+[node name="room1" parent="map" node_paths=PackedStringArray("proxRooms") instance=ExtResource("3_hqwyx")]
+position = Vector2(-240, 0)
+proxRooms = [NodePath("../room2"), NodePath("../room3")]
+
+[node name="room2" parent="map" node_paths=PackedStringArray("proxRooms") instance=ExtResource("4_odukl")]
+position = Vector2(-720, 2)
+proxRooms = [NodePath("../room1")]
+
+[node name="room3" parent="map" node_paths=PackedStringArray("proxRooms") instance=ExtResource("5_382sa")]
+position = Vector2(240, 0)
+proxRooms = [NodePath("../room1"), NodePath("../room4")]
+
+[node name="room4" parent="map" node_paths=PackedStringArray("proxRooms") instance=ExtResource("6_68625")]
+position = Vector2(720, 0)
+proxRooms = [NodePath("../room3")]

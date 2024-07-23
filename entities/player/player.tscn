@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://baf1yuwh274nr"]
+
+[ext_resource type="Script" path="res://entities/player/player.gd" id="1_2imle"]
+[ext_resource type="Texture2D" uid="uid://caqhrj6opo1vi" path="res://entities/player/sprites/rbk_003.png" id="2_4gyko"]
+[ext_resource type="PackedScene" uid="uid://boyb54ikpfy1b" path="res://entities/composition/health/healthComponent.tscn" id="3_i7uk7"]
+[ext_resource type="PackedScene" uid="uid://xmiafre8n1ox" path="res://entities/composition/hitbox/hitboxComponent.tscn" id="4_lvcvs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc4mj"]
+atlas = ExtResource("2_4gyko")
+region = Rect2(4, 5, 28, 38)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jxqcp"]
+height = 36.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykdo1"]
+size = Vector2(16, 33)
+
+[node name="player" type="CharacterBody2D" groups=["player"]]
+floor_block_on_wall = false
+script = ExtResource("1_2imle")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -58)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_xc4mj")
+offset = Vector2(0, -19)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -18)
+shape = SubResource("CapsuleShape2D_jxqcp")
+debug_color = Color(0, 0.4, 0.466667, 0.419608)
+metadata/_edit_group_ = true
+
+[node name="hitboxComponent" parent="." node_paths=PackedStringArray("Health") instance=ExtResource("4_lvcvs")]
+Health = NodePath("../healthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitboxComponent"]
+position = Vector2(0, -16.5)
+shape = SubResource("RectangleShape2D_ykdo1")
+debug_color = Color(0.964706, 0.0627451, 0.443137, 0.419608)
+
+[node name="healthComponent" parent="." instance=ExtResource("3_i7uk7")]
+metadata/_edit_group_ = true
+
+[node name="coyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
